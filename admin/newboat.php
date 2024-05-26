@@ -13,8 +13,8 @@ if (isset($_POST['insertmotor'])) {
     $bPrice = $_POST['b_price'];
 
     $new_image_name = 'image_' . date('Y-m-d-H-i-s') . '_' . uniqid() . '.jpg';
-    move_uploaded_file($_FILES["bimg"]["tmp_name"], "../boat_image/".$new_image_name);
-    $new_image_name = '../boat_image/'.$new_image_name;
+    move_uploaded_file($_FILES["bimg"]["tmp_name"], "../motors_image/".$new_image_name);
+    $new_image_name = '../motors_image/'.$new_image_name;
 
     $sql = "INSERT INTO motors (b_name, m_quantity, b_model, b_img, b_price) VALUES (?, ?, ?, ?, ?)";
     $res = $db->insertRow($sql, [$bname, $bcpcty, $bon, $new_image_name, $bPrice]);

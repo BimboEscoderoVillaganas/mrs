@@ -103,7 +103,7 @@ $reservation_count = $result['reservation_count'];
                 $res = $db->deleteRow($sql,[$bid]);
 
                 $bimg = $_GET['bimg'];
-                if($bimg != '../boat_image/'.'default.png'){
+                if($bimg != '../motors_image/'.'default.png'){
                     unlink($bimg);
                 }
                 //header('Location: index.php'$bimg.'.jpg'

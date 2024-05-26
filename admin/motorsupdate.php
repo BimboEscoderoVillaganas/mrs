@@ -150,8 +150,8 @@ $reservation_count = $result['reservation_count'];
                         $bPrice = $_POST['b_price'];
 
                         $new_image_name = 'image_' . date('Y-m-d-H-i-s') . '_' . uniqid() . '.jpg';
-                        move_uploaded_file($_FILES["bimg"]["tmp_name"], "../boat_image/".$new_image_name);
-                        $new_image_name = '../boat_image/'.$new_image_name;
+                        move_uploaded_file($_FILES["bimg"]["tmp_name"], "../motors_image/".$new_image_name);
+                        $new_image_name = '../motors_image/'.$new_image_name;
 
                         if(empty($_FILES["bimg"]["tmp_name"])) {
                             $sql = "UPDATE motors SET b_name = ?, m_quantity = ?, b_model = ?, b_price = ? WHERE motor_id = ?";
@@ -159,7 +159,7 @@ $reservation_count = $result['reservation_count'];
                         } else {
                             $sql = "UPDATE motors SET b_name = ?, m_quantity = ?, b_model = ?, b_img = ?, b_price = ? WHERE motor_id = ?";
                             $res = $db->updateRow($sql, [$bname, $bcpcty, $bon, $new_image_name, $bPrice, $editid]);
-                            if($oldbimg != '../boat_image/default.png') {
+                            if($oldbimg != '../motors_image/default.png') {
                                 unlink($oldbimg);
                             }
                         }
