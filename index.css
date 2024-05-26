@@ -1,0 +1,13 @@
+h1 {
+    font-family: Times New Roman;
+    font-size: 60px;
+    color: rgb(117, 243, 125);
+    text-shadow: 5px 2px 12px rgb(1, 9, 0);
+}
+
+p {
+    font-family: Times New Roman;
+    color: rgb(117, 243, 125);
+    text-shadow: 3px 1px 10px  rgb(0, 0, 0);
+    font-size: 30px;
+}

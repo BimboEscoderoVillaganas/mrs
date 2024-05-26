@@ -1,0 +1,15 @@
+.navbar { margin-bottom:0px !important; }
+        .carousel-caption { margin-top:0px !important }
+
+        td.align-img {
+            line-height: 3 !important;
+        }
+        .notification {
+            background-color: red;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 50%;
+            position: relative;
+            top: -10px;
+            right: 10px;
+        }
