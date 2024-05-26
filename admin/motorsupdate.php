@@ -2,10 +2,12 @@
 
 	include_once('../config.php');//database
 	$db = new Database();
-	
-    
-// Fetch reservation count
-$sql = "SELECT COUNT(*) AS reservation_count FROM reservation WHERE status IS NULL OR status NOT IN ('approved', 'declined')";
+	$tid = $_SESSION['tourID']; // Assuming user ID is stored in session// Fetch logged-in user's username
+$sql = "SELECT user_name FROM users WHERE user_id = ?";
+$user_result = $db->getRow($sql, [$tid]);
+$loggedInUser = $user_result['user_name'];
+// Fetch reservation count excluding 'approved', 'declined', and 'deleted' statuses
+$sql = "SELECT COUNT(*) AS reservation_count FROM reservation WHERE status IS NULL OR status NOT IN ('approved', 'declined', 'deleted')";
 $result = $db->getRow($sql);
 $reservation_count = $result['reservation_count'];
 ?>
@@ -88,10 +90,14 @@ $reservation_count = $result['reservation_count'];
                             <li>
                                 <a href="declined.php">Declined</a>
                             </li>
+                            <li>
+                                <a href="users.php">Users</a>
+                            </li>
 						</ul>
 						
 						<ul class="nav navbar-nav navbar-right" style="font-family: Times New Roman;">
 							<li>
+                            <?php echo '<span style="margin-right: 10px;">Logged in as: ' . htmlspecialchars($loggedInUser) . '</span>'; ?>
 								<?php include_once('../includes/logout.php'); ?>
 							</li>
 						
@@ -124,10 +130,10 @@ $reservation_count = $result['reservation_count'];
                     if(isset($_GET['editid'])) {
                         $editid = $_GET['editid'];
 
-                        $sql = "SELECT * FROM motors WHERE b_id = ?";
+                        $sql = "SELECT * FROM motors WHERE motor_id = ?";
                         $res = $db->getRow($sql, [$editid]);
                         $bname = $res['b_name'];
-                        $bon = $res['b_on'];
+                        $bon = $res['b_model'];
                         $bcpcty = $res['m_quantity'];
                         $getoldbimg = $res['b_img'];
                         $bPrice = $res['b_price'] ?? '';
@@ -144,16 +150,16 @@ $reservation_count = $result['reservation_count'];
                         $bPrice = $_POST['b_price'];
 
                         $new_image_name = 'image_' . date('Y-m-d-H-i-s') . '_' . uniqid() . '.jpg';
-                        move_uploaded_file($_FILES["bimg"]["tmp_name"], "../boat_image/".$new_image_name);
-                        $new_image_name = '../boat_image/'.$new_image_name;
+                        move_uploaded_file($_FILES["bimg"]["tmp_name"], "../motors_image/".$new_image_name);
+                        $new_image_name = '../motors_image/'.$new_image_name;
 
                         if(empty($_FILES["bimg"]["tmp_name"])) {
-                            $sql = "UPDATE motors SET b_name = ?, m_quantity = ?, b_on = ?, b_price = ? WHERE b_id = ?";
+                            $sql = "UPDATE motors SET b_name = ?, m_quantity = ?, b_model = ?, b_price = ? WHERE motor_id = ?";
                             $res = $db->updateRow($sql, [$bname, $bcpcty, $bon, $bPrice, $editid]);
                         } else {
-                            $sql = "UPDATE motors SET b_name = ?, m_quantity = ?, b_on = ?, b_img = ?, b_price = ? WHERE b_id = ?";
+                            $sql = "UPDATE motors SET b_name = ?, m_quantity = ?, b_model = ?, b_img = ?, b_price = ? WHERE motor_id = ?";
                             $res = $db->updateRow($sql, [$bname, $bcpcty, $bon, $new_image_name, $bPrice, $editid]);
-                            if($oldbimg != '../boat_image/default.png') {
+                            if($oldbimg != '../motors_image/default.png') {
                                 unlink($oldbimg);
                             }
                         }

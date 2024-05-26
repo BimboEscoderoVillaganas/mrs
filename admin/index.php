@@ -103,7 +103,7 @@ $reservation_count = $result['reservation_count'];
                 $res = $db->deleteRow($sql,[$bid]);
 
                 $bimg = $_GET['bimg'];
-                if($bimg != '../boat_image/'.'default.png'){
+                if($bimg != '../motors_image/'.'default.png'){
                     unlink($bimg);
                 }
                 //header('Location: index.php'$bimg.'.jpg'
@@ -146,7 +146,7 @@ $reservation_count = $result['reservation_count'];
                         <td class="align-img"><center><img src="<?php echo $bimg; ?>" width="50" height="50"></center></td>
                         <td class="align-img"><?php echo 'Php '.number_format($bPrice, 2); ?></td>
                         <td class="align-img">
-                            <a class = "btn btn-success btn-xs" href="boatsupdate.php?editid=<?php echo $bid; ?>">
+                            <a class = "btn btn-success btn-xs" href="motorsupdate.php?editid=<?php echo $bid; ?>">
                                 Edit
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
